@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block head %}
+  Index Page
+  <style>
+    .card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+{% endblock %}
+
+{% block body %}
+
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo">Logo</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="sass.html">Sass</a></li>
+        <li><a href="badges.html">Components</a></li>
+        <li><a href="collapsible.html">JavaScript</a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+{% for a in movies %}
+  <div class = "row">
+    <div class = "col s3"></div>
+    <div class = "col s4 m6">
+      <div class = "card blue-grey darken-1">
+        <div class = "card-image">
+            {% if a.picture %}
+              <img src = {{ a.picture.url }}>
+            {% endif %}
+        </div>
+        <div class = "card-content white-text">
+          <span class = "card-title">{{ a.title }}, <br/> {{ a.releaseDate }}</span>
+          <p>Description:</p> <br/>
+          <span class = "card-subtitle">{{ a.desc|safe|truncatewords:"50"|linebreaks }}
+          </span>
+        </div>
+        <div class = "card-action">
+          <a href="{% url 'prefMovie:detail' a.id %}">Read More</a>
+        </div>
+      </div>
+    </div>
+    <div class = "col s4"></div>
+  </div>
+
+
+{% endfor %}
+{% endblock %}
