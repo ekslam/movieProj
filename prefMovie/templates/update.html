@@ -5,12 +5,31 @@
 {% endblock %}
 
 {% block body %}
-<form action="{% url 'prefMovie:update' form.instance.id %}" method="POST">
-  {% csrf_token %}
-  {% for field in form %}
-    {{ field.errors }}
-    {{ field.label }} {{ field }}
-  {% endfor %}
+
+<nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo"><i class =
+        "material-icons">movie</i>Movies</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="sass.html">Sass</a></li>
+        <li><a href="badges.html">Components</a></li>
+        <li><a href="collapsible.html">JavaScript</a></li>
+      </ul>
+    </div>
+  </nav>
+
+<div class = "row">
+<form class = "col s12" action="{% url 'prefMovie:update' form.instance.id %}" method="POST" enctype= "multipart/form-data">
+    {% csrf_token %}
+    <div class = "row">
+      <div class = "input-field col s12">
+        {% for field in form %}
+          {{ field.errors }}
+          {{ field.label }} {{ field }}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
   <input type = "submit" value = "Update">
 </form>
 {% endblock %}

@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 
+{% load static %}
 {% block head %}
   Detail page
 {% endblock %}
 
 {% block body %}
 <style>
+
     .center-justified {
         text-align:justify;
         -moz-text-align-last:center;
@@ -14,28 +16,26 @@
         margin-right: 10%;
     }
     .colorNew {
-        color:lightcoral;
+        background-color:lightcoral;
     }
 
-    .toolbar-center {
-        margin-left: 10%;
-        margin-right: 10%;
+    .colorNew:hover {
+        background-color:dodgerblue;
     }
+
 
 </style>
 
     <nav>
         <div class="nav-wrapper">
-          <a href="#" class="brand-logo">Logo</a>
-          <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="sass.html">Sass</a></li>
-            <li><a href="badges.html">Components</a></li>
-            <li><a href="collapsible.html">JavaScript</a></li>
-          </ul>
+          <a href="#" class="brand-logo">Movies</a>
         </div>
       </nav>
 
       <center>
+            {% if movies.image %}
+                <img src = {{ movies.image.url }}/>
+            {% endif %}
             <h5><b>Title:</b></h5>
             <h6><b>{{ movies.title }}</b></h6>
             <b>Release Date:</b> <br/>
@@ -46,39 +46,40 @@
             <div class = "col s3"></div>
       </center>      
 
-      <div class = "col s3"></div>
-      <div class ="col s4 toolbar fixed-action-btn">
+      <div class = "click-to-toggle fixed-action-btn">
             <a class = "btn-floating btn-large red">
-                <i class = "large material-icons">mode_edit</i>
+                <i class = "large material-icons" >add</i>
             </a>
-            <ul class = "toolbar-center">
+            <ul>
                 <li>
-                    <a class = "btn-floating colorNew"><i class = "material-icons">comment</i></a>
+                    <a class = "btn-floating tooltipped colorNew" data-position = "top"><i class = "material-icons"  data-tooltip = "Comment">comment</i></a>
                 </li>
-                <li>
-                    <a class = "btn-floating colorNew"><i class = "material-icons">edit</i></a>
+                <li>0
+                    <a href="{% url 'prefMovie:update' movies.id %}" class = "btn-floating colorNew"><i class = "material-icons">edit</i></a>
                 </li>
             </ul>
         </div>
-        <div class = "col s3"></div>
 
       
                 
       <script>
+        
         document.addEventListener('DOMContentLoaded', function() {
             var elems = document.querySelectorAll('.fixed-action-btn');
             var instances = M.FloatingActionButton.init(elems, {
-            toolbarEnabled: true
+            direction: 'left'
             });
         });
 
-        // Or with jQuery
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.tooltipped');
+            var instances = M.Tooltip.init(elems, options);
+        });
 
-        // $('.fixed-action-btn').floatingActionButton({
-        //     toolbarEnabled: true
-        // });
-        
-        
+        $(document).ready(function(){
+            $('.tooltipped').tooltip();
+        });
+
       </script>
 
 

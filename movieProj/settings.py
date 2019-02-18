@@ -122,6 +122,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = 'media'
+MEDIA_ROOT = BASE_DIR + '/media/'
 
-LOGIN_URL = '/login/'
+LOGIN_URL = '/prefMovie/login/'
+LOGIN_REDIRECT_URL = '/prefMovie/'
