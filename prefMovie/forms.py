@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Movies
+from .models import Movies, Comment
 from django.contrib.auth.models import User
 from django.forms.widgets import PasswordInput
 
@@ -15,3 +15,9 @@ class RegistrationModelForm(ModelForm):
         widgets = {
             'password': PasswordInput()
         }
+
+
+class CommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['author', 'text',]
