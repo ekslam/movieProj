@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+
+{% block head %}
+  Index Page
+
+{% endblock %}
+
+{% block body %}
+  <style>
+    .btn-size {
+      display: inline-block;
+      font-size: 16px;
+      width: 150px;
+    }
+
+    .fixed-action-btn {
+      margin-top: 15px;
+      position: relative;
+    }
+
+    
+    .star-rating {
+        align-items: center;
+        font-size: 3em;
+        justify-content: center;
+        margin-top: 50px;
+    }
+    .back-stars {
+        color: #bb5252;
+        position: relative;
+        text-shadow: 4px 4px 10px #843a3a;
+    }
+    .front-stars {
+        color: #FFBC0B;
+        overflow: hidden;
+        position: absolute;
+        text-shadow: 2px 2px 5px #d29b09;
+        top: 0;
+    }
+
+    .responsive {
+        width: 100%;
+        height: auto;
+    }
+  </style>
+
+  {% if request.user.is_authenticated %}
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">   
+              Movie Review
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dropdown
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </li>
+                <li class = "nav-item">
+                </li>
+              </ul>
+              <a class = "btn" href="{% url 'prefMovie:logout' %}">LOGOUT</a>
+              <button class="btn btn-outline-success my-2 my-sm-0"  type="submit">LOGOUT</button>
+            </div>
+
+          </nav>
+    <br/>
+
+    {% for a in movies %}
+    <center>
+    <div class="card text-white bg-dark mb-3" style="max-width: 70%;">
+      <div class = "row no-gutters"> 
+        <div class = "col-md-4">
+                {% if a.image %}
+                  <img class = "card-img" style = "height:90%; width:100%;" src = {{ a.image.url }}>
+                {% endif %}
+            </div>
+            <div class = "col-md-8">
+            <div class = "card-body">
+              <span class = "card-title"><b>{{ a.title }}</b>, <br/> {{ a.releaseDate }}</span>
+              <p>Description:</p> <br/>
+              <span class = "card-text">{{ a.desc|safe|truncatewords:"200"|linebreaks }}
+              </span>
+              <h5>Average Rating</h5>
+              <div class="star-rating" title="70%">
+                  <div class="back-stars">
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      
+                      <div class="front-stars" style="width: 100%">
+                          <i class="fa fa-star" aria-hidden="true"></i>
+                          <i class="fa fa-star" aria-hidden="true"></i>
+                          <i class="fa fa-star" aria-hidden="true"></i>
+                          <i class="fa fa-star" aria-hidden="true"></i>
+                          <i class="fa fa-star" aria-hidden="true"></i>
+                      </div>
+                  </div>
+              </div>    
+            </div>
+          </div>
+
+            
+        
+        </div>
+       
+      </div>
+    </center>
+    {% endfor %}
+
+  {% else %}
+      <nav>
+        <div class="nav-wrapper">
+          <a href="#" class="brand-logo"><i class =
+            "material-icons">movie</i>Movies</a>
+        </div>
+      </nav>
+      <center>
+        <div class = "row">
+          <br/>
+            <a href = "{% url 'prefMovie:login' %}" class = "btn btn-size">Login</a>
+            <br/><br/>
+            <a href = "{% url 'prefMovie:registration' %}" class = "btn btn-size">Register</a>
+        </div>
+      </center>
+  {% endif %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.fixed-action-btn');
+            var instances = M.FloatingActionButton.init(elems, {
+            direction: 'bottom'
+            });
+        });
+  </script>
+{% endblock %}

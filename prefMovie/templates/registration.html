@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load bootstrap4 %}
+
+{% block title %}Registration{% endblock %}
+{% block body %}
+
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo"><i class =
+        "material-icons">movie</i>Movies</a>
+    </div>
+</nav>
+
+<div class="row">
+    <div class="col m3">
+        <form action="{% url 'prefMovie:registration' %}" method="POST">
+            {% csrf_token %}
+            {{ form }}
+            {% buttons %}
+                <button class="btn" type="submit" value="Register" />
+            {% endbuttons %}
+        </form>
+    </div>
+</div>
+{% endblock %}

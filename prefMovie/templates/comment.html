@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block head %}
+  Comment Page
+{% endblock %}
+
+{% block body %}
+
+<nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo"><i class =
+        "material-icons">comment</i>Comment</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="sass.html">Sass</a></li>
+        <li><a href="badges.html">Components</a></li>
+        <li><a href="collapsible.html">JavaScript</a></li>
+      </ul>
+    </div>
+  </nav>
+
+<div class = "row">
+<form class = "col s12" action="{% url 'add_comment_to_post' pk=post.pk %}" method="POST" enctype= "multipart/form-data">
+    {% csrf_token %}
+    <div class = "row">
+      <div class = "input-field col s12">
+        {{ form.as_p }}
+      </div>
+    </div>
+  </div>
+  <input type = "submit" value = "Comment">
+</form>
+{% endblock %}
