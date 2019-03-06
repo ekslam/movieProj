@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'prefMovie.apps.PrefmovieConfig',
-    'bootstrap4'
+    'bootstrap4',
+    'star_ratings',
+    
 ]
 
 MIDDLEWARE = [

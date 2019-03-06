@@ -17,7 +17,7 @@ class RegistrationModelForm(ModelForm):
         }
 
 
-class CommentForm(ModelForm):
+class CommentModelForm(ModelForm):
     class Meta:
         model = Comment
-        fields = ['author', 'text',]
+        exclude = ['id']

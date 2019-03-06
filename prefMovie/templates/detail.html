@@ -6,62 +6,98 @@
 {% endblock %}
 
 {% block body %}
-<style>
-
-    .center-justified {
-        text-align:justify;
-        -moz-text-align-last:center;
-        text-align-last:center;
-        margin-left: 10%;
-        margin-right: 10%;
-    }
-    .colorNew {
-        background-color:lightcoral;
-    }
-
-    .colorNew:hover {
-        background-color:dodgerblue;
-    }
 
 
-</style>
-
-    <nav>
-        <div class="nav-wrapper">
-          <a href="#" class="brand-logo">Movies</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">   
+        Movie Review
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+            <a class="nav-link" href="{% url 'prefMovie:index' %}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li>
+            <li class = "nav-item">
+            </li>
+        </ul>
+        <a class = "btn" href="{% url 'prefMovie:logout' %}">LOGOUT</a>
+        <button class="btn btn-outline-success my-2 my-sm-0"  type="submit">LOGOUT</button>
         </div>
-      </nav>
+
+    </nav>
+    <br/>
+
 
       <center>
-            {% if movies.image %}
-                <img src = {{ movies.image.url }}/>
-            {% endif %}
-            <h5><b>Title:</b></h5>
-            <h6><b>{{ movies.title }}</b></h6>
-            <b>Release Date:</b> <br/>
-            <b>{{ movies.releaseDate }}</b><br/>
-            Description:
-            <div class = "col s3"></div> 
-            <div class = "col s4 center-justified" >{{ movies.desc }}</div>
-            <div class = "col s3"></div>
-      </center>      
+            <div class="card text-white bg-dark mb-3" style="max-width: 70%;">
+            <div class = "row no-gutters"> 
+                <div class = "col-md-4">
+                {% if movies.image %}
+                    <img src = {{ movies.image.url }}/>
+                {% endif %}
+                </div>
+                <div class = "col-md-8">
+                <div class = "card-body">
+                <span class = "card-title">
+                <h6><b>{{ movies.title }}</b></h6></span>
+                <b>Release Date:</b> <br/>
+                <b>{{ movies.releaseDate }}</b><br/>
+                Description:
+                <div class = "card-text" >{{ movies.desc }}</div>
+                </div>
+                <div class="row">
+                        <form action="{% url 'prefMovie:detail' movies.id%}" method="POST">
+                                {% csrf_token %}
+                                {{comment.text}}
+        
+                                <button type="submit" value="Add" class="btn btn-primary mb-2">Submit</button>
+                                <div class="alert alert-primary" role="alert">
+                                        A simple primary alert—check it out!
+                                      </div>
+                        </form>
+                </div>      
+                </div>
 
-      <div class = "click-to-toggle fixed-action-btn">
-            <a class = "btn-floating btn-large red">
-                <i class = "large material-icons" >add</i>
-            </a>
-            <ul>
-                <li>
-                    <a class = "btn-floating tooltipped colorNew" data-position = "top"><i class = "material-icons"  data-tooltip = "Comment">comment</i></a>
-                </li>
-                <li>
-                    <a href="{% url 'prefMovie:update' movies.id %}" class = "btn-floating colorNew"><i class = "material-icons">edit</i></a>
-                </li>
-            </ul>
-        </div>
+                <div class="row">
+                        <ul class="list-group w-100">
+                                {% for comment in movies.comment.all %}
+                                        <a class="list-group-item list-group-item-action">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                <small> {{ comment.created_date }} </small>
+                                                <strong>{{ comment.author }}</strong>
+                                                </div>
+                                                <p class="mb-1">{{ comment.text }}</p>
+                                        </a>
+                                        
+                                {% endfor %}
+                        </ul>
+                    </div>
+                    <center>
+                    
+      </center>
+      </div>
 
-      
-                
+             
       <script>
         
         document.addEventListener('DOMContentLoaded', function() {

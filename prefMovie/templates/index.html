@@ -42,6 +42,11 @@
         width: 100%;
         height: auto;
     }
+
+    .navbar-fixed-top.scrolled {
+      background-color: "linear-gradient(top, #2b2b2f, #49484a)";
+      transition: background-color 200ms linear;
+    }
   </style>
 
   {% if request.user.is_authenticated %}
@@ -117,7 +122,10 @@
                           <i class="fa fa-star" aria-hidden="true"></i>
                       </div>
                   </div>
-              </div>    
+              </div>  
+              <div class = "card-action">
+                  <a href="{% url 'prefMovie:detail' a.id %}">Read More</a>
+                </div>  
             </div>
           </div>
 
@@ -152,5 +160,13 @@
             direction: 'bottom'
             });
         });
+
+
+    $(function () {
+      $(document).scroll(function() {
+        var $nav = $(".navbar-fixed-top");
+        $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
+      });
+    });
   </script>
 {% endblock %}
