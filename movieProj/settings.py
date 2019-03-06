@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'prefMovie.apps.PrefmovieConfig',
     'bootstrap4',
-    'star_ratings',
+    'djangoratings',
     
 ]
 

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import Movies
+from .models import Movies, Comment
 from .forms import (MovieModuleForm, RegistrationModelForm, CommentModelForm)
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
@@ -19,16 +19,19 @@ def movies_detail(request, movies_id):
     mov['movies'] = Movies.objects.get(id=movies_id)
     mov['comment'] = CommentModelForm(initial={'prefMovie':Movies.objects.get(id=movies_id)})
 
+    print("Here")
     if request.method == 'POST':
         form = CommentModelForm(request.POST)
-        
-        if form.is_valid():
-            form.save()
-            return render(request, 'detail.html', mov)
+        if request.user.is_authenticated:
+            if form.is_valid():
+                print("form is valid")
+                form.save()
+                return render(request, 'detail.html', mov)
+            else:
+                    print(form.errors)
+                    return render(request,'detail.html', mov)
     else:
-        return render(request, 'detail.html', mov)
-
-    return render(request,'detail.html', mov)
+        return render(request,'detail.html', mov)
 
 @login_required
 def add_movie(request):
@@ -36,6 +39,7 @@ def add_movie(request):
     mov['form'] = MovieModuleForm()
     if request.method == 'POST':
         form = MovieModuleForm(request.POST)
+        
         if form.is_valid():
             form.save()
             return redirect('/prefMovie/')

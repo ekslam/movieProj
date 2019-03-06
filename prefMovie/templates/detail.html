@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
+
 {% block head %}
   Detail page
 {% endblock %}
@@ -21,27 +22,12 @@
             <a class="nav-link" href="{% url 'prefMovie:index' %}">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-            </li>
-            <li class="nav-item">
             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
             </li>
             <li class = "nav-item">
             </li>
         </ul>
-        <a class = "btn" href="{% url 'prefMovie:logout' %}">LOGOUT</a>
-        <button class="btn btn-outline-success my-2 my-sm-0"  type="submit">LOGOUT</button>
+        <a class="btn btn-outline-success my-2 my-sm-0" href="{% url 'prefMovie:logout' %}">LOGOUT</a>
         </div>
 
     </nav>
@@ -49,39 +35,41 @@
 
 
       <center>
+            {% if movies.image %}
+            <img src = {{ movies.image.url }}/>
+            {% endif %}
+            <br/><br/>
             <div class="card text-white bg-dark mb-3" style="max-width: 70%;">
             <div class = "row no-gutters"> 
-                <div class = "col-md-4">
-                {% if movies.image %}
-                    <img src = {{ movies.image.url }}/>
-                {% endif %}
+                <div class = "card-img-top">
+                
                 </div>
-                <div class = "col-md-8">
                 <div class = "card-body">
                 <span class = "card-title">
-                <h6><b>{{ movies.title }}</b></h6></span>
+                <h4><b>{{ movies.title }}</b></h4></span>
                 <b>Release Date:</b> <br/>
                 <b>{{ movies.releaseDate }}</b><br/>
                 Description:
-                <div class = "card-text" >{{ movies.desc }}</div>
+                <div style = "text-align: justify;" class = "card-text" >{{ movies.desc }}</div>
+                </div>
+                     
                 </div>
                 <div class="row">
-                        <form action="{% url 'prefMovie:detail' movies.id%}" method="POST">
+                        <form action="{% url 'prefMovie:detail' movies.id %}" method="POST">
                                 {% csrf_token %}
-                                {{comment.text}}
-        
-                                <button type="submit" value="Add" class="btn btn-primary mb-2">Submit</button>
-                                <div class="alert alert-primary" role="alert">
-                                        A simple primary alert—check it out!
-                                      </div>
-                        </form>
-                </div>      
-                </div>
+                                <table style= "color: white; margin-left: 50px;">
 
+                                {{ comment.as_table }}
+                            </table>
+                                <button type="submit" value="Add" class="btn btn-primary mb-2">Submit</button>
+                            
+                        </form>
+                </div> 
                 <div class="row">
-                        <ul class="list-group w-100">
+                        <ul style = "width:96.5%;">
+                            <table >
                                 {% for comment in movies.comment.all %}
-                                        <a class="list-group-item list-group-item-action">
+                                        <a style = "background-color: black;"class="list-group-item list-group-item-action">
                                                 <div class="d-flex w-100 justify-content-between">
                                                 <small> {{ comment.created_date }} </small>
                                                 <strong>{{ comment.author }}</strong>
@@ -90,6 +78,7 @@
                                         </a>
                                         
                                 {% endfor %}
+                            </table>
                         </ul>
                     </div>
                     <center>
